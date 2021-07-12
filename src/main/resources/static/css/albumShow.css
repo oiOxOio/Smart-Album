@@ -1,0 +1,404 @@
+* {
+    user-select: none;
+}
+
+body {
+    background: #f6f5f5;
+}
+
+.uploadImgPicture li, #deleteFileName div {
+    list-style-type: none;
+    width: 23%;
+    height: 100px;
+    display: inline-block;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+#deleteFileName img {
+    width: 100%;
+    height: 90%;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.uploadImgPicture div {
+    line-height: 90px;
+    width: 100px;
+    height: 90px;
+    margin: 0 auto;
+}
+
+.uploadImgPicture img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.uploadImgPicture li {
+    cursor: pointer;
+}
+
+.uploadImgPicture p {
+    width: 100%;
+    text-overflow: ellipsis;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden
+}
+
+
+.renameModal {
+    margin: 0 auto;
+    text-align: center;
+    height: 200px;
+    width: 300px;
+}
+
+.renameModal img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#dowebok {
+    padding-left: 7%;
+    align-items: center;
+    z-index: 10;
+}
+
+
+#dowebok li {
+    display: inline-block;
+    width: 110px;
+    height: 135px;
+    margin-left: 2%;
+    margin-right: 3%;
+    cursor: pointer;
+}
+
+#dowebok li div {
+    line-height: 90px;
+    width: 100px;
+    height: 90px;
+    margin: -20px auto 0px auto;
+    text-align: center
+}
+
+#dowebok li img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+
+input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 13px;
+    position: relative;
+    cursor: pointer;
+    -webkit-appearance: none; /*去除默认样式*/
+    outline: none;
+}
+
+input[type="checkbox"]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #007bff;
+    border-radius: 50%;
+}
+
+input[type="checkbox"]:hover::before {
+    transition: all 0.35s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #0220e5;
+    border-radius: 50%;
+
+}
+
+input[type="checkbox"]:checked::before {
+    transition: all 0.35s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #fff;
+    width: 80%;
+    height: 80%;
+    margin: 2px 2px;
+    border: 8px solid #007bff;
+    border-radius: 50%;
+}
+
+
+#dowebok input[type=checkbox] {
+    position: relative;
+    top: -4px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+.divider {
+    margin: 5px 0px 2px 0px;
+    height: 1px;
+    background: #CCCCCC;
+}
+
+.dropdown a {
+    transition: all 0.70s ease;
+    text-align: center;
+    background-position: 5% 0;
+    border-radius: 5%;
+}
+
+.dropdown a:hover {
+    background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 80%, #c2d4ef 100%);
+
+    background-size: 300% 100%;
+    transform: translateY(-10%);
+    transition: all .4s ease-in-out;
+    background-position: 100% 0;
+    box-shadow: 0 1px 1px 0 rgba(77, 100, 113, 0.75);
+}
+
+.dropdown {
+    margin: auto;
+}
+
+#dowebok li:hover {
+
+    background: #e7e7e7;
+    border-radius: 5%;
+}
+
+#dowebok li:hover input[type=checkbox] {
+    opacity: 1;
+    transition: all .7s;
+}
+
+.detailed_information {
+    position: fixed;
+    left: 80%;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgb(248, 248, 248);
+    height: 100%;
+    width: 20%;
+    z-index: -5;
+    opacity: 0;
+    transition: all .7s;
+
+}
+
+.detailed_information span {
+    font-size: 14px;
+    line-height: 2.6;
+    padding-left: 1em;
+    padding-top: 10px;
+
+}
+
+.detailed_tags {
+
+}
+
+.detailed_tags ul {
+    font-size: 12px;
+    display: flex;
+    padding-left: 5%;
+    padding-right: 5%;
+    justify-content: flex-start;
+    align-items: center;
+
+    flex-wrap: wrap;
+}
+
+.detailed_tags ul li {
+    display: inline-block;
+    height: 100%;
+    margin: 1px 3px 3px 1px;
+    padding: 1px 3% 1px 2%;
+    list-style-type: none;
+    border-radius: 5%;
+    border: 1px solid #CCC;
+    text-align: center;
+}
+
+.tagsCloseOutline, .tagsAddOutline, tagsOpenOutline {
+    position: relative;
+    left: 5px;
+    top: 1px;
+    cursor: pointer;
+}
+
+.tagsAddOutline {
+    left: 1px;
+}
+
+.tagsCloseOutline {
+    display: none;
+}
+
+.tagsOpenOutline {
+    opacity: 0;
+    cursor: pointer;
+}
+
+.detailed_tags ul li:hover {
+    padding-right: 3%;
+    transition: all .5s;
+}
+
+.detailed_tags ul li:hover .tagsCloseOutline {
+    display: inline-block;
+    transition: all .7s;
+}
+
+.detailed_tags ul span:hover .tagsOpenOutline {
+    opacity: 1;
+    transition: all .7s;
+}
+
+
+.detailedImg .detailedType {
+    float: left;
+    width: 78%;
+    margin-top: 4px;
+    padding-left: 2%;
+    font-size: 14px;
+    display: inline-block;
+    word-wrap: break-word;
+    line-height: 24px;
+
+}
+
+
+.detailedImg .avatar-img {
+    float: left;
+    padding-left: 0.5em;
+    padding-top: 0.5em;
+    width: 10%;
+    white-space: normal;
+}
+
+.detailed_label {
+    float: left;
+    width: 100%;
+}
+
+.detailedColor {
+    color: #b6b6b6;
+}
+
+.navbar-albumShow {
+    margin-top: -2em;
+}
+
+.container-fluid {
+    color: #4e555b;
+}
+
+.container-fluid a {
+    color: #4e555b;
+}
+
+.detailed_information a {
+    color: #4e555b;
+}
+
+.modal-title {
+    font-family: "楷体";
+    font-size: 1.1em;
+}
+
+
+.tool-item {
+    display: inline-block;
+    border-radius: 5%;
+    width: 18.3%;
+    height: 100%;
+}
+
+.btn-toolbar-dark {
+    width: 213px;
+    border-radius: 5%;
+    position: fixed;
+    left: 45%;
+    top: 92%;
+}
+
+#album_menu {
+    z-index: -999;
+    opacity: 0;
+    transition: all .5s;
+    transform: translateY(300%);
+}
+
+.detailedDownloadAndDelete a {
+    display: inline-block;
+    padding: 5%;
+    width: 20%;
+    text-align: center;
+    color: #6a6a6a;
+}
+
+.detailedDownloadAndDelete i {
+    padding: 30%;
+}
+
+.detailedDownloadAndDelete a:hover i {
+    background: #e7e7e7;
+    color: #000000;
+}
+
+
+#modal-dialog-add {
+    max-width: 650px;
+}
+
+#dowebok p, #deleteFileName div p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: auto;
+    text-align: center;
+    font-size: 12px;
+}
+
+#deleteFileName div p {
+    width: 100%;
+}
+
+.myPagination {
+    margin-top: 20px;
+}
+
+.pagination {
+    justify-content: center;
+}
+
+@media (max-width: 576px) {
+    .uploadImgPicture li {
+        width: 48%;
+    }
+
+    .detailed_tags ul li {
+        width: 98%;
+    }
+
+}

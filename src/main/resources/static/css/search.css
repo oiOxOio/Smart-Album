@@ -1,0 +1,144 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navigation {
+    width: 300px;
+    height: 0;
+    float: right;
+}
+
+.container1 {
+    position: relative;
+    top: 20px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 150px;
+    height: 50px;
+    margin-left: 90px;
+    margin-top: 15px;
+}
+
+.container1 .search1 {
+    position: relative;
+    margin: auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: all .3s;
+    z-index: 4;
+    box-shadow: 0 0 25px 0 rgba(255, 255, 255, 0.4);
+}
+
+
+.container1:hover .search1 {
+    background: #e5e5e5;
+}
+
+.container1 .search1:hover {
+    cursor: pointer;
+    background: #e5e5e5;
+}
+
+.container1 .search1::before {
+    content: "";
+    position: absolute;
+    margin: auto;
+    top: 19px;
+    right: 0;
+    bottom: 0;
+    left: 18px;
+    width: 12px;
+    height: 2px;
+    background: #5f5f5f;
+    transform: rotate(45deg);
+    transition: all .3s;
+}
+
+.container1 .search1::after {
+    content: "";
+    position: absolute;
+    margin: auto;
+    top: -5px;
+    right: 0;
+    bottom: 0;
+    left: -5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #5f5f5f;
+    transition: all .3s;
+}
+
+.container1 input {
+    position: absolute;
+    text-indent: 0.5em;
+    margin: auto 200px auto auto;
+    top: -15px;
+    right: -140px;
+    bottom: 0;
+    left: 0;
+    width: 35px;
+    height: 35px;
+    outline: none;
+    border: none;
+    background: #CCCCCC;
+    color: white;
+    text-shadow: 0 0 5px #5e5e5e;
+    border-radius: 30px;
+    box-shadow: 0 0 25px 0 #d0d0d0, 0 5px 2px 0 rgba(0, 0, 0, 0.2);
+    transition: width .3s, opacity .2s;
+    opacity: 0;
+    z-index: 5;
+    font-weight: bolder;
+    letter-spacing: 0.1em;
+}
+
+.container1 input:hover {
+    cursor: pointer;
+}
+
+.container1 input:focus {
+    width: 160px;
+    opacity: 1;
+    cursor: text;
+}
+
+.container1 input:focus ~ .search1 {
+    background: #bababa;
+    z-index: 6;
+
+}
+
+.container1 input:focus ~ .search1::before {
+    top: 0;
+    left: 0;
+    width: 25px;
+    background: white;
+}
+
+.container1 input:focus ~ .search1::after {
+    top: 0;
+    left: 0;
+    width: 25px;
+    height: 2px;
+    border: none;
+    background: white;
+    border-radius: 0%;
+    transform: rotate(-45deg);
+}
+
+.container1 input::placeholder {
+    color: white;
+    opacity: 0.5;
+    font-weight: bolder;
+}
+
+@media screen and (max-width: 991px) {
+    .container1 {
+        margin-top: -10px;
+    }
+}

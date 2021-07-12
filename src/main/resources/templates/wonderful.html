@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>精彩时刻</title>
+  <link th:href="@{/favicon.svg}" rel="icon" type="image/x-ico">
+  <link rel="stylesheet" th:href="@{/css/candle.css}">
+  <link rel="stylesheet" th:href="@{/css/wonderful.css}">
+</head>
+
+<body>
+  <div class="app" th:if="imageSetList != null">
+
+    <div class="cardList">
+      <!-- 左按钮 -->
+      <button class="cardList__btn btn btn--left">
+        <div class="icon">
+          <svg>
+            <use xlink:href="#arrow-left"></use>
+          </svg>
+        </div>
+      </button>
+
+      <!-- 图片展示 -->
+      <div class="cards__wrapper">
+        <div class="card" th:each="imageSet,imageSetStat : ${imageSetList}"
+            th:classappend="${imageSetStat.first ? 'current--card' : (imageSetStat.last ? 'previous--card' : 'next--card')}">
+          <div class="card__image">
+            <img th:src="${imageSet.getBackgroundUrl()}" alt="" src=""/>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右按钮 -->
+      <button class="cardList__btn btn btn--right">
+        <div class="icon">
+          <svg>
+            <use xlink:href="#arrow-right"></use>
+          </svg>
+        </div>
+      </button>
+    </div>
+
+    <!-- 对应的信息 -->
+    <div class="infoList">
+      <div class="info__wrapper">
+        <div class="info" th:each="imageSet,imageSetStat : ${imageSetList}"
+            th:classappend="${imageSetStat.first ? 'current--info' : (imageSetStat.last ? 'previous--info' : 'next--info')}">
+          <h1 class="text name" th:text="${imageSet.getName()}">回忆</h1>
+          <h4 class="text location" th:text="${#dates.format(imageSet.getCreateTime(),'yyyy-MM-dd')}">2021-05-31</h4>
+          <p class="text description" th:text="${imageSet.getDetail()}">深浅不一的印记，付之一笑的回忆</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 对应的背景 -->
+    <div class="app__bg">
+      <div class="app__mask"></div>
+      <div th:each="imageSet : ${imageSetList}" class="app__bg__image"
+          th:classappend="${imageSetStat.first ? 'current--image' : (imageSetStat.last ? 'previous--image' : 'next--image')}">
+        <video th:if="${imageSet.getWonderfulUrl() != null}" th:src="${imageSet.getWonderfulUrl()}"
+            loop="loop" autoplay="autoplay" style="position: fixed;height: 100%;width: 100%;"></video>
+        <img th:if="${imageSet.getWonderfulUrl() == null}" th:src="${imageSet.getBackgroundUrl()}" alt="" src=""/>
+      </div>
+
+    </div>
+
+    <!-- 绘制按钮 -->
+    <svg class="icons" style="display: none;">
+      <symbol id="arrow-left" xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>
+        <polyline points='328 112 184 256 328 400'
+            style='fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px'/>
+      </symbol>
+      <symbol id="arrow-right" xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>
+        <polyline points='184 112 328 256 184 400'
+            style='fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px'/>
+      </symbol>
+    </svg>
+
+  </div>
+
+  <!-- 加载页面 -->
+  <div class="loading__wrapper">
+    <div class="loader--text">Loading...</div>
+    <div class="loader">
+      <span></span>
+    </div>
+  </div>
+
+  <!-- 底部蜡烛 -->
+  <div class="warpper">
+    <div class="candles">
+
+      <!-- 蜡烛1 -->
+      <div class="candle1">
+        <div class="candle1_body">
+          <div class="candle1_eyes">
+            <span class="candle1_eyes-left"></span>
+            <span class="candle1_eyes-right"></span>
+          </div>
+          <div class="candle1_mouth"></div>
+        </div>
+        <div class="candle1_stick"></div>
+      </div>
+
+      <!-- 蜡烛2 -->
+      <div class="candle2">
+        <div class="candle2_body">
+          <div class="candle2_eyes">
+            <span class="candle2_eyes-left"></span>
+            <span class="candle2_eyes-right"></span>
+          </div>
+        </div>
+        <div class="candle2_stick"></div>
+      </div>
+
+      <div class="candle2_fire"></div>
+
+      <div class="candle_smoke1"></div>
+      <div class="candle_smoke2"></div>
+    </div>
+
+    <div class="floor"></div>
+  </div>
+</body>
+<!--等待图片是否全部加载-->
+<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+<!--web动画库-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.3/gsap.min.js"></script>
+
+<script th:src="@{/js/jquery-3.5.1.min.js}"></script>
+<script th:src="@{/js/wonderful.js}"></script>
+
+<script>
+
+    window.onload = function () {
+        let candles = $("body > div.warpper > div.candles");
+        let floor = $("body > div.warpper > div.floor");
+        let leftImage = $("body > div.app > div.cardList > div > div.card.previous--card");
+        let midImage = $("body > div.app > div.cardList > div > div.card.current--card");
+        let rightImage = $("body > div.app > div.cardList > div > div.card.next--card");
+        let leftButton = $("body > div.app > div.cardList > button.cardList__btn.btn.btn--left");
+        let rightButton = $("body > div.app > div.cardList > button.cardList__btn.btn.btn--right");
+        let text = $("body > div.app > div.infoList");
+        let mask = $("body > div.app > div.app__bg > div.app__mask");
+        let background = $("body > div.app > div.app__bg");
+
+        let els = [candles, floor, leftImage, midImage, rightImage, leftButton, rightButton, text, mask, background];
+
+        let flag = false;
+
+        /*点击蜡烛*/
+        candles.click(function () {
+            if (!flag) {
+                addAllClassName(els, "hidden")
+                flag = true;
+            }
+        });
+
+        /*鼠标移到底部白条*/
+        floor.hover(function () {
+            if (flag) {
+                removeAllClassName(els, "hidden")
+                flag = false;
+            }
+        });
+
+    }
+
+    //给数组里所有元素添加或删除类名
+    function addAllClassName(element, className) {
+        element.forEach((e) => {
+            e.addClass(className);
+        })
+    }
+
+    function removeAllClassName(element, className) {
+        element.forEach((e) => {
+            e.removeClass(className);
+        })
+    }
+</script>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>登录页面</title>
+  <link th:href="@{/favicon.svg}" rel="icon" type="image/x-ico">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
+</head>
+
+<body>
+  <div class="waveWrapper waveAnimation" style="opacity: 1;transition: all 3s; ">
+    <div>
+      <div class="Bg"></div>
+      <div class="" id="loginleft"></div>
+      <div class="login" style="z-index: 501;">
+        <form action="/register" method="post" id="register-form">
+          <span id="register_wenzi">注册</span>
+          <div class="form-group">
+            <input id="register_username" class="form-control" name="username" type="text" size="18"
+                required="">
+            <span class="form-highlight"></span>
+            <span class="form-bar"></span>
+            <label for="register_username" class="float-label">用户名</label>
+          </div>
+          <div class="form-group">
+            <input id="register_password" class="form-control" name="password" type="password" size="18"
+                required="">
+            <span class="form-highlight"></span>
+            <span class="form-bar"></span>
+            <label for="register_password" class="float-label">密码</label>
+          </div>
+
+          <div class="form-group">
+            <input id="register_mail" class="form-control" name="mail" type="text" size="18"
+                required="">
+            <span class="form-highlight"></span>
+            <span class="form-bar"></span>
+            <label for="register_mail" class="float-label">电子邮箱</label>
+            <button id="send_code" type="button">发送验证码</button>
+          </div>
+
+          <div class="form-group">
+            <input id="code" class="form-control" name="code" type="text" size="18"
+                required="">
+            <span class="form-highlight"></span>
+            <span class="form-bar"></span>
+            <label for="code" class="float-label">验证码</label>
+          </div>
+
+          <div class="form-group" id="register_anniu">
+            <button id="register_fanhui"><img th:src="@{/images/left.png}"/></button>
+            <button id="register" type="submit">注册</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="login flag1" style="z-index: 501;">
+        <div class="photo">
+        </div>
+        <span id="wenzi"><p>Hello！欢迎使用！</p></span>
+        <form action="/login" method="post" id="login-form">
+          <div id="u" class="form-group">
+            <input id="username" class="form-control" name="username" type="text" size="18"
+                alt="login" required="">
+            <span class="form-highlight"></span>
+            <span class="form-bar"></span>
+            <label for="username" class="float-label">用户名/电子邮箱</label>
+
+          </div>
+          <div id="p" class="form-group">
+            <input id="password" class="form-control" name="password" type="password"
+                size="18" alt="login" required="">
+            <span class="form-highlight"></span>
+            <span class="form-bar"></span>
+            <label for="password" class="float-label">密码</label>
+          </div>
+          <div class="form-group" id="anniu">
+            <input type="checkbox" id="rem">
+            <label for="rem" class="label" id="jizhu">记住密码</label>
+            <label for="rem" class="label" id="wangji">忘记密码？</label>
+            <button id="next" type="button">&nbsp;&nbsp;&nbsp;&nbsp;➜&nbsp;&nbsp;&nbsp;&nbsp;</button>
+            <button id="fanhui"><img th:src="@{/images/left.png}"/></button>
+            <button id="login" type="submit" tabindex="-1">登录</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+    <div class="waveWrapperInner bgTop">
+      <div class="wave waveTop" style="background-image: url('/images/wave-top.png')"></div>
+    </div>
+    <div class="waveWrapperInner bgMiddle">
+      <div class="wave waveMiddle" style="background-image: url('/images/wave-mid.png')"></div>
+    </div>
+    <div class="waveWrapperInner bgBottom">
+      <div class="wave waveBottom" style="background-image: url('/images/wave-bot.png')"></div>
+    </div>
+  </div>
+  <!--导入公共js-->
+  <div th:include="~{comm::js}"></div>
+  <script th:src="@{/js/index.js}"></script>
+</body>
+
+</html>

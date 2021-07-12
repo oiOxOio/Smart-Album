@@ -1,0 +1,430 @@
+.container-fluid {
+    color: #4e555b;
+}
+
+.container-fluid a {
+    color: #4e555b;
+}
+
+.pointPhotoAlbum {
+    position: absolute;
+    width: 200px;
+    height: 50px;
+    left: 30%;
+    top: 0;
+}
+
+.sample {
+
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+    min-width: 230px;
+    max-width: 315px;
+    height: 220px;
+    width: 100%;
+    color: #000;
+    text-align: right;
+    font-size: 16px;
+    background-color: #000;
+}
+
+.sample * {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: all 0.35s ease;
+    transition: all 0.35s ease;
+}
+
+.sample img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.sample figcaption {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    opacity: 1;
+    padding: 30px 0 30px 10px;
+    background-color: #fff;
+    width: 40%;
+    -webkit-transform: translateX(150%);
+    transform: translateX(150%);
+}
+
+.sample figcaption:before {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    right: 100%;
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 120px 120px 120px 0;
+    border-color: transparent #fff transparent transparent;
+}
+
+.sample:after {
+    position: absolute;
+    bottom: 50%;
+    right: 40%;
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 120px 120px 0 120px;
+    border-color: rgba(255, 255, 255, 0.5) transparent transparent transparent;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    -webkit-transition: all 0.35s ease;
+    transition: all 0.35s ease;
+}
+
+.sample h3,
+.sample p {
+    line-height: 1.5em;
+    -webkit-transform: translateX(-30px);
+    transform: translateX(-30px);
+    margin: 0;
+}
+
+.sample h3 {
+    margin: 0 0 5px;
+    line-height: 1.1em;
+    font-weight: 900;
+    font-size: 1.4em;
+    opacity: 0.75;
+}
+
+.sample p {
+    font-size: 0.8em;
+}
+
+.sample ion-icon {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 15px 15px;
+    font-size: 38px;
+    color: #fff;
+    opacity: 0;
+
+}
+
+.sample input[type=checkbox] {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+}
+
+.sample a {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.sample:hover img,
+.sample.hover img {
+    zoom: 1;
+    filter: alpha(opacity=50);
+    -webkit-opacity: 0.5;
+    opacity: 0.5;
+}
+
+.sample:hover:after,
+.sample.hover:after,
+.sample:hover figcaption,
+.sample.hover figcaption,
+.sample:hover ion-icon,
+.sample.hover ion-icon,
+.sample.hover input[type=checkbox],
+.sample:hover input[type=checkbox] {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.sample:hover input,
+.sample.hover input {
+    z-index: 3;
+    opacity: 1;
+}
+
+
+.hide {
+    opacity: 0;
+}
+
+.avatar-btns button {
+    height: 35px;
+}
+
+
+.imageSetList .ellipsis-h {
+    z-index: 2900;
+}
+
+
+.imageSetMenu {
+    position: absolute;
+    width: 28%;
+    height: 47%;
+    left: 6%;
+    right: 0px;
+    top: 48%;
+    bottom: 0px;
+    z-index: 2500;
+    border-radius: 10%;
+    display: none;
+
+
+}
+
+.dropdownImageSetMenu {
+
+    font-size: 38px;
+    height: 100%;
+    width: 100%;
+}
+
+.dropdownImageSetMenu div {
+    height: 50%;
+}
+
+.fa-trash-btn {
+    text-align: left;
+    width: 100%;
+
+}
+
+.pencilSquare {
+    text-align: right;
+    width: 100%;
+}
+
+.dropdownImageSetMenu a {
+    display: contents;
+    color: #ffffff;
+}
+
+.dropdownImageSetMen i {
+    height: 100%;
+
+}
+
+.dropdownImageSetMenu a:hover {
+    color: #ff0000;
+    transition: all .3s;
+}
+
+
+.jumbotron {
+    display: flex;
+    padding: 2rem 2rem;
+    box-shadow: 0 0.3em 1em #CCCCCC;
+}
+
+.jumbotron-img {
+    width: 100px;
+    height: 100px;
+
+}
+
+.jumbotron .btn {
+    margin: auto;
+    width: 7%;
+    height: 100%;
+    color: #ffffff;
+    border-radius: 15px;
+    background-size: 300% 100%;
+    text-align: center;
+    font-size: 14px;
+    background-position: 5% 0;
+
+    background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
+    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+}
+
+.jumbotron .btn:hover {
+    transform: translateY(-10%);
+    transition: all .4s ease-in-out;
+    background-position: 100% 0;
+
+}
+
+.jumbotron-text {
+    margin-left: 2%;
+    width: 82%;
+    margin-top: -20px;
+}
+
+.jumbotron-text div {
+    padding-top: 0.4rem;
+
+}
+
+.jumbotron-text .jumbotron-textName {
+    font-size: 1.2em;
+    font-weight: 540;
+}
+
+.jumbotron-text .jumbotron-textSummary {
+    color: #6d6d6d;
+    font-size: 0.8em;
+    font-family: "宋体";
+
+}
+
+.jumbotron-text .jumbotron-textDetail {
+    text-indent: 2em;
+    font-family: "楷体";
+}
+
+.jumbotron-img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: 0 0.3em 1em 0.3em #CCCCCC;
+}
+
+
+.form-group {
+    text-indent: 0.8em;
+    line-height: 1.5em;
+    margin-bottom: 0rem;
+    font-size: 14px;
+}
+
+.form-group input {
+    margin: 0.4em auto;
+}
+
+.form-group .div-ion {
+    padding-bottom: 6px;
+}
+
+.form-group .div-ion span {
+    opacity: 0;
+}
+
+.form-group .div-ion:hover span {
+    transition: all .3s;
+    opacity: 1;
+}
+
+.form-group .div-ion input:focus {
+    background: #efefef;
+}
+
+.form-group .div-ion textarea:focus {
+    background: #efefef;
+}
+
+.form-group .div-ion ion-icon {
+    position: relative;
+    font-size: 25px;
+    top: 8px;
+    left: -2px;
+    margin-right: 3px;
+}
+
+#addImageSetForm .form-group textarea, #modifyImageSetForm .form-group textarea {
+    margin: 0.4em auto;
+    line-height: 2.0rem;
+}
+
+
+.backgroundsImage {
+    text-indent: 0;
+}
+
+.backgroundsImage div {
+    width: 14%;
+    display: inline-block;
+    height: 40px;
+    margin-top: 5px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+}
+
+.backgroundsImage div:hover {
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.75);
+}
+
+.backgroundsImage div img {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    object-fit: cover;
+}
+
+input[name="backgroundsRadio"] {
+    position: absolute;
+    margin: 0;
+
+}
+
+.customBackgroundClose {
+    position: absolute;
+    margin-left: -12px;
+    height: 12px;
+    width: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 54, 54, 0.9);
+    border-radius: 50%;
+    margin-top: 0px;
+}
+
+.customBackgroundClose:hover {
+    color: #ffffff;
+}
+
+.customBackgroundClose i {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top: -8px;
+    left: 1px;
+    font-size: 12px;
+}
+
+
+.plus-square {
+}
+
+.plus-square a {
+    height: 40px;
+    width: 40px;
+}
+
+.plus-square i {
+    width: 100%;
+    height: 100%;
+}
+
+.plus-square i:before {
+    margin-left: -35px;
+    font-size: 40px;
+}
+
+
+.dropdownImageSetMenu .fa-trash {
+    transform: translateY(130%);
+}
+
+.dropdownImageSetMenu .fa-pencil-square-o {
+    transform: translateX(-130%);
+}

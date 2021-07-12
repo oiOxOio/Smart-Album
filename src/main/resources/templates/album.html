@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>我的相册</title>
+
+  <!--导入公共css-->
+  <link th:include="~{comm::css}"/>
+  <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+  <link th:href="@{/css/jquery.toolbar.css}" rel="stylesheet"/>
+  <link th:href="@{/css/album.css}" rel="stylesheet"/>
+  <link th:href="@{/css/albumShow.css}" rel="stylesheet"/>
+
+
+  <link th:href="@{/css/cropper.min.css}" rel="stylesheet"/>
+  <link th:href="@{/css/sitelogo.css}" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+
+</head>
+<body>
+  <!--导航-->
+  <div th:include="~{comm::nav}"></div>
+
+  <!--模态框 删除文件提示-->
+  <div class="modal fade" tabindex="-1" role="dialog" id="removeImageModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">提示</h4>
+        </div>
+        <div class="modal-body">
+          <p>是否删除</p>
+        </div>
+        <form id="deleteForm" method="post">
+          <div class="form-group">
+            <!--<input type="hidden" class="form-control" th:value="${path}" name="path">-->
+            <input type="hidden" class="form-control" name="removeImageName" id="removeImageName">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" id="deleteBtn" class="btn btn-primary">确定</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!--模态框 创建相册-->
+  <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">创建相册</h4><span class="hidden pointPhotoAlbum alert alert-warning">相册名不能为空哦~</span>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+        </div>
+
+        <form id="addImageSetForm" method="post">
+          <div class="form-group">
+            <div class="div-ion">
+              <ion-icon name="book"></ion-icon>
+              <span>相册名：</span>
+              <input type="text" class="form-control col-11" name="name" id="name" required="required"></div>
+          </div>
+          <div class="form-group">
+            <div class="div-ion">
+              <ion-icon name="browsers"></ion-icon>
+              <span>相册简介：</span>
+              <input type="text" class="form-control col-11" name="summary" id="summary" required="required"></div>
+          </div>
+          <div class="form-group">
+            <div class="div-ion">
+              <ion-icon name="logo-buffer"></ion-icon>
+              <span>相册详情：</span>
+              <textarea type="text" class="form-control col-11" name="detail" id="detail"
+                  required="required"></textarea></div>
+          </div>
+          <div class="form-group">
+            <div class="div-ion">
+              <ion-icon name="color-palette"></ion-icon>
+              <span>相册背景：</span>
+              <div class="backgroundsImage"></div>
+              <div class="plus-square"><a class="btn" data-toggle="modal" data-target="#avatar-modal"><i
+                  class='fa fa-plus-square-o'></i></a>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary" id="addImageSetSubmit">确定</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!--模态框 修改相册信息-->
+  <div class="modal fade" tabindex="-1" role="dialog" id="modifyModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">修改相册</h4><span class="hidden pointPhotoAlbum alert alert-warning">相册名不能为空哦~</span>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+        </div>
+
+        <form id="modifyImageSetForm" method="post">
+          <div class="form-group">
+            <div class="div-ion">
+              <ion-icon name="book"></ion-icon>
+              <span>相册名：</span>
+              <input type="text" class="form-control col-11" name="name" id="modifyName" required="required"></div>
+          </div>
+          <div class="form-group">
+            <div class="div-ion">
+              <ion-icon name="browsers"></ion-icon>
+              <span>相册简介：</span>
+              <input type="text" class="form-control col-11" name="summary" id="modifySummary" required="required">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="div-ion">
+              <ion-icon name="logo-buffer"></ion-icon>
+              <span>相册详情：</span>
+              <textarea type="text" class="form-control col-11" name="detail" id="modifyDetail"
+                  required="required"></textarea></div>
+          </div>
+          <div class="form-group">
+            <div class="div-ion">
+              <ion-icon name="color-palette"></ion-icon>
+              <span>相册背景：</span>
+              <div class="backgroundsImage"></div>
+              <div class="plus-square"><a class="btn" data-toggle="modal" data-target="#avatar-modal"><i
+                  class='fa fa-plus-square-o'></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary" id="modifyImageSetSubmit">确定</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="user_pic" style="margin: 10px;">
+    <img src=""/>
+  </div>
+  <!--  模态框 选择图片  -->
+  <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog"
+      tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <!--<form class="avatar-form" action="upload-logo.php" enctype="multipart/form-data" method="post">-->
+        <form class="avatar-form">
+          <div class="modal-header">
+            <h4 class="modal-title" id="avatar-modal-label">上传图片</h4>
+            <button class="close" data-dismiss="modal" type="button">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="avatar-body">
+              <div class="avatar-upload">
+                <input class="avatar-src" name="avatar_src" type="hidden">
+                <input class="avatar-data" name="avatar_data" type="hidden">
+                <label for="avatarInput" style="line-height: 35px;">图片上传</label>
+                <button class="btn btn-primary" type="button" style="height: 35px;"
+                    onClick="$('input[id=avatarInput]').click();">请选择图片
+                </button>
+                <span id="avatar-name"></span>
+                <input class="avatar-input hide" id="avatarInput" name="avatar_file" type="file"></div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                  <div class="avatar-wrapper"></div>
+                </div>
+                <!--                  <div class="col-md-3">-->
+                <!--                    <div class="avatar-preview preview-lg" id="imageHead"></div>-->
+                <!--                  </div>-->
+              </div>
+              <div class="row avatar-btns">
+                <div class="col-md-4">
+                  <div class="btn-group">
+                    <button class="btn btn-primary fa fa-undo" data-method="rotate" data-option="-90" type="button"
+                        title="Rotate -90 degrees"> 向左旋转
+                    </button>
+                  </div>
+                  <div class="btn-group">
+                    <button class="btn  btn-primary fa fa-repeat" data-method="rotate" data-option="90" type="button"
+                        title="Rotate 90 degrees"> 向右旋转
+                    </button>
+                  </div>
+                </div>
+                <div class="col-md-5" style="text-align: right;">
+                  <button class="btn btn-primary fa fa-arrows" data-method="setDragMode" data-option="move"
+                      type="button" title="移动">
+							            <span class="docs-tooltip" data-toggle="tooltip" title=""
+                              data-original-title="$().cropper(&quot;setDragMode&quot;, &quot;move&quot;)">
+							            </span>
+                  </button>
+                  <button type="button" class="btn btn-primary fa fa-search-plus" data-method="zoom" data-option="0.1"
+                      title="放大图片">
+							            <span class="docs-tooltip" data-toggle="tooltip" title=""
+                              data-original-title="$().cropper(&quot;zoom&quot;, 0.1)">
+							            </span>
+                  </button>
+                  <button type="button" class="btn btn-primary fa fa-search-minus" data-method="zoom" data-option="-0.1"
+                      title="缩小图片">
+							            <span class="docs-tooltip" data-toggle="tooltip" title=""
+                              data-original-title="$().cropper(&quot;zoom&quot;, -0.1)">
+							            </span>
+                  </button>
+                  <button type="button" class="btn btn-primary fa fa-refresh" data-method="reset" title="重置图片">
+                    <span class="docs-tooltip" data-toggle="tooltip" title=""
+                        data-original-title="$().cropper(&quot;reset&quot;)" aria-describedby="tooltip866214"></span>
+                  </button>
+                </div>
+                <div class="col-md-3">
+                  <button class="btn btn-primary btn-block avatar-save fa fa-save" type="button" data-dismiss="modal"
+                      onclick="saveImageChange()"> 保存修改
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading" aria-label="Loading" role="img" tabindex="-1"></div>
+
+  <div class="right-main">
+    <div class="container-fluid">
+      <ul class="nav row">
+        <div class="col-2">
+          <span class="span">相册</span>
+        </div>
+        <div class="col-9"></div>
+        <li class="dropdown col-1">
+          <a href="#myModal" data-toggle="modal" class="btn" onclick="defaultBackgroundsImage()"
+              style="border-radius: 50%">
+            <ion-icon name="add-outline" style="position: relative;font-size: 25px;top: 4px;left: 0px;"></ion-icon>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+
+    <div class="nav" th:if="${imageSetList != null}">
+      <figure class="sample imageSetList" th:each="imageSet : ${imageSetList}">
+        <div class="imageSetMenu">
+          <div class="dropdownImageSetMenu">
+            <div class="fa-trash-btn"><a href="#removeImageModal" data-toggle="modal" onclick="removeImageSetBtn()"><i
+                class="fa fa-trash"></i></a></div>
+            <div class="pencilSquare" th:title="${imageSet.getDetail()}"><a href="#modifyModal" data-toggle="modal"
+                onclick="modifyImageSetBtn()"><i class="fa fa-pencil-square-o"></i></a></div>
+          </div>
+        </div>
+        <img th:src="${imageSet.getBackgroundUrl()}"
+            th:alt="${imageSet.getName()}" th:title="${imageSet.getId()}"/>
+        <figcaption>
+          <h3 th:text="${imageSet.getName()}"></h3><br>
+          <p>简介：<span>[[${imageSet.getSummary()}]]</span></p><br>
+          <p>创建时间：
+          <p th:text="${#dates.format(imageSet.getCreateTime(), 'yyyy-MM-dd HH:mm:ss')}"></p></p>
+        </figcaption>
+        <ion-icon name="image-outline" class="ellipsis-h"></ion-icon>
+        <a th:href="'/album/' + ${imageSet.getName()}"></a>
+      </figure>
+
+    </div>
+
+  </div>
+
+</body>
+<!--导入公共js-->
+<div th:include="~{comm::js}"></div>
+<script th:src="@{/js/cropper.js}"></script>
+<script th:src="@{/js/sitelogo.js}"></script>
+<script th:src="@{/js/html2canvas.min.js}"></script>
+<script th:src="@{/js/album.js}"></script>
+
+
+<script type="text/javascript">
+    //简易的验证  大小 格式
+    $('#avatarInput').on('change', function (e) {
+        var filemaxsize = 1024 * 5;//5M
+        var target = $(e.target);
+        var Size = target[0].files[0].size / 1024;
+        if (Size > filemaxsize) {
+            alert('图片过大，请重新选择!');
+            $(".avatar-wrapper").childre().remove;
+            return false;
+        }
+        if (!this.files[0].type.match(/image.*/)) {
+            alert('请选择正确的图片!')
+        } else {
+            var filename = document.querySelector("#avatar-name");
+            var texts = document.querySelector("#avatarInput").value;
+            var teststr = texts; //你这里的路径写错了
+            testend = teststr.match(/[^\\]+\.[^\(]+/i); //直接完整文件名的
+            filename.innerHTML = testend;
+        }
+
+    });
+    $(function () {
+        $("[data-toggle='popover']").popover();
+    });
+
+</script>
+</html>

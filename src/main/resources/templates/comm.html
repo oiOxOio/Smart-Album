@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>公共文件</title>
+</head>
+<body>
+  <!--公共css文件-->
+  <div th:fragment="css">
+    <link th:href="@{/favicon.svg}" rel="icon" type="image/x-ico">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+  </div>
+
+  <!--侧边导航条-->
+  <div th:fragment="nav">
+    <link th:href="@{/css/nav.css}" rel="stylesheet"/>
+    <!-- 侧边导航 -->
+    <div class="nav topbar">
+      <div class="nav-btn btn-primary hide-btn" id="topbar">
+        <a class="text-decoration-none" href="/userMain">
+          <ion-icon name="cloud-outline" style="margin: 0 9px -7px 0;font-size: 30px;"></ion-icon>
+          <strong>Smart Album</strong>
+        </a>
+        <ion-icon name="menu-outline" style="position: absolute;font-size: 30px;top: 17px;left: 193px"></ion-icon>
+      </div>
+    </div>
+
+    <div class="mobile-nav hide-nav" id="mobile-menu">
+      <ul class="nav">
+        <div class="user text-nowrap">
+          <a aria-expanded="false" class="collapsed " data-toggle="collapse" href="#collapseExample">
+            <div class="touxiang">
+              <ion-icon name="person-outline" class="avatar-img"></ion-icon>
+            </div>
+            <span th:text="${username}"></span>
+          </a>
+          <div class="in collapse " id="collapseExample">
+            <ul class="nav">
+              <li>
+                <a href="/getUserInfo">
+                  <span class="link-collapse">个人中心</span>
+                </a>
+              </li>
+              <li>
+                <a href="/signOut">
+                  <span class="link-collapse">退出登录</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <li class="nav-item text-nowrap">
+          <a aria-expanded="false" href="/userMain">
+            <div class="list-icon">
+              <ion-icon name="folder-outline"></ion-icon>
+            </div>
+            <span>文 件</span>
+          </a>
+        </li>
+
+        <li class="nav-item text-nowrap">
+          <a aria-expanded="false" href="/album">
+            <div class="list-icon">
+              <ion-icon name="image-outline"></ion-icon>
+            </div>
+            <span>相 册</span>
+          </a>
+        </li>
+
+        <li class="nav-item text-nowrap">
+          <a aria-expanded="false" href="#">
+            <div class="list-icon">
+              <ion-icon name="star-outline"></ion-icon>
+            </div>
+            <span>收 藏</span>
+          </a>
+        </li>
+
+        <li class="nav-item text-nowrap">
+          <a aria-expanded="false" href="#">
+            <div class="list-icon">
+              <ion-icon name="trash-outline"></ion-icon>
+            </div>
+            <span>回收站</span>
+          </a>
+        </li>
+
+      </ul>
+
+      <ul class="nav bottomProgressBar">
+        <li class="nav-item text-nowrap">
+          <a aria-expanded="false" href="#">
+            <div class="list-icon">
+              <ion-icon name="information-outline"></ion-icon>
+            </div>
+            <span>
+              [[${size}]]M / [[${maxSize}]]M
+              <div class="progress">
+                <div
+                    class="progress-bar progress-bar-striped progress-bar-animated"
+                    th:classappend="${percentage} < 75 ? 'bg-success' : 'bg-warning'"
+                    role="progressbar"
+                    th:aria-valuenow="${percentage}" aria-valuemin="0" aria-valuemax="100"
+                    th:style="'min-width: 10%;width:'+${percentage}+'%;'">
+                </div>
+              </div>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <script th:src="@{/js/nav.js}"></script>
+  </div>
+
+  <!--  搜索框-->
+  <div th:fragment="search">
+    <div class="navigation">
+      <link th:href="@{/css/search.css}" rel="stylesheet"/>
+      <div class="container1">
+        <input type="text" id="searchBar">
+        <div class="search1"></div>
+      </div>
+    </div>
+    <script th:src="@{/js/search.js}"></script>
+  </div>
+
+  <!--公共js文件-->
+  <div th:fragment="js">
+    <script th:src="@{/js/jquery-3.5.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+app:
+  # 每个用户空间默认最大容量，单位b，默认500m
+  maxDepositorySize: 524288000
+  # 工作文件夹，所有程序生成的本地文件都会放在这
+  workingFolder: C:/Users/Administrator/Desktop/smartAlbum
+
+  # ffmpeg.exe的存放路径,默认放在工作文件夹下
+  ffmpegPath: ${app.workingFolder}/ffmpeg.exe
+
+  # 精彩时刻的工作路径
+  # 生成的精彩时刻视频完整路径如下
+  # 工作文件夹/{程序会自动生成的用户文件夹名字}/{程序会自动生成相册id}/video/out.mp4
+  wonderfulPath: ${app.workingFolder}/video/
+
+# 移动云相关服务配置信息
+ecloud:
+  #  只存放原图
+  bucketName:
+  #  用来存放用户的其它资源（相册背景图片/精彩时刻视频/图片缩略图等）
+  bucketName2:
+
+  #  OSS服务的ak、sk和地区
+  ossAccessKey:
+  ossSecretKey:
+  ossEndPoint:
+
+  #  云API的ak和sk
+  ecloudAccessKey:
+  ecloudSecretKey:
+
+  # 在此目录下存放用户的资源(相册的默认背景图片和视频)
+  # 相册默认背景图片存放路径示例  {bucketName}/{resources}/albumBackground/
+  # 精彩时刻视频存放路径示例     {bucketName}/{resources}/video/{程序自动生成的用户文件夹名字}/{程序生成的相册id}/1.mp4
+  resources: "resources"
+spring:
+
+  thymeleaf:
+    cache: false
+
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/smartAlbum?serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    #德鲁伊连接池相关配置  http://127.0.0.1:8081/druid 用户名和密码都是admin
+    druid:
+      # 初始化大小，最小，最大
+      initial-size: 1
+      min-idle: 1
+      max-active: 20
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      # 检查连接正常的sql
+      validation-query: select 1 from dual
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      # 配置监控统计拦截的filters,监控统计:stat,日志监控:slf4j
+      filters: stat,wall,slf4j
+      use-global-data-source-stat: true
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      web-stat-filter:
+        enabled: true
+        url-pattern: "/*"
+        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
+      # 配置监控服务器
+      stat-view-servlet:
+        enabled: true
+        url-pattern: "/druid/*"
+        # “Reset All”功能
+        reset-enable: true
+        # 登录名、登录密码
+        login-username: admin
+        login-password: admin
+
+  # 最大上传总文件大小限制100m
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+  #邮箱连接配置(注册账号时用到)
+  mail:
+    username:
+    password:
+    host: smtp.qq.com
+
+#日志输出配置(没有路径文件夹则自动创建)
+logging:
+  file:
+    name: ${app.workingFolder}/smartAlbum.log
+
+server:
+  port: 8081
+  servlet:
+    session:
+      timeout: 60M
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.smartalbum.domain
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql

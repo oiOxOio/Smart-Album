@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>相册展示</title>
+  <!--导入公共css-->
+  <link th:include="~{comm::css}"/>
+  <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+  <link th:href="@{/css/jquery.toolbar.css}" rel="stylesheet"/>
+  <link th:href="@{/css/viewer.min.css}" rel="stylesheet"/>
+  <link th:href="@{/css/album.css}" rel="stylesheet"/>
+  <link th:href="@{/css/albumShow.css}" rel="stylesheet"/>
+
+</head>
+<body>
+  <!--模态框 重命名文件提示-->
+  <div class="modal fade" tabindex="-1" role="dialog" id="renameModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">重命名</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body renameModal">
+          <img id="renameShow" src="/images/loading.png">
+        </div>
+        <form id="renameForm" method="post">
+          <div class="form-group row">
+            <span class="col-1"><input type="hidden" class="form-control " name="oldName" id="renameOld"></span>
+            <input type="input" class="form-control col-10" name="newName" id="renameNew">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="renameSubmit" data-dismiss="modal">确定</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!--模态框 移除图片提示-->
+  <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">提示</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <p>是否移除以下图片</p>
+          <p id="deleteFileName" class="text"></p>
+        </div>
+        <form id="deleteForm1" method="post">
+          <div class="form-group">
+            <input type="hidden" class="form-control" name="filenames" id="name1">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" id="deleteBtn1" class="btn btn-primary">确定</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!--模态框 添加图片-->
+  <div class="modal fade" tabindex="-1" role="dialog" id="fileUpload">
+    <div class="modal-dialog" role="document" id="modal-dialog-add">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">添加图片</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+        </div>
+        <form id="uploadForm" method="post" enctype="multipart/form-data">
+          <div class="modal-body">
+            <div class="uploadImgPicture">
+            </div>
+            <div class="container">
+              <div class="myPagination"></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button id="uploadBtn1" type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!--导航-->
+  <div th:include="~{comm::nav}"></div>
+  <div class="right-main card">
+
+    <div class="jumbotron" th:if="${imageSet != null}">
+      <div class="jumbotron-img">
+        <img th:src="${imageSet.getBackgroundUrl()}">
+      </div>
+      <div class="jumbotron-text">
+        <div class="jumbotron-textName" th:text="${imageSet.getName()}"></div>
+        <div class="jumbotron-textSummary" th:text="${imageSet.getSummary()}"></div>
+        <div class="jumbotron-textDetail" th:text="${imageSet.getDetail()}"></div>
+
+      </div>
+      <a th:if="${imageSet.getWonderfulUrl() != null}" th:href="'/wonderful?name=' + ${imageSet.getName()}" class="btn">精彩时刻</a>
+
+    </div>
+
+    <div class="navbar navbar-default navbar-albumShow">
+
+      <div class="container-fluid">
+        <div class="">
+          <input type="checkbox" id="selectAll">
+          <span class="span" id="selectCount">共 项</span>
+        </div>
+        <ul class="nav navbar-right">
+
+          <li class="dropdown">
+            <a class="btn" href="#fileUpload" data-toggle="modal" onclick="add_photos()" style="border-radius: 50%">
+              <ion-icon name="add-outline" style="position: relative;font-size: 25px;top: 4px;left: 0px;"></ion-icon>
+            </a>
+            <a class="btn hidden" href="#myModal" data-toggle="modal" id="deletePhoto">
+              <ion-icon name="remove-outline" style="position: relative;font-size: 25px;top: 4px;left: 0px;"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <ul id="dowebok" th:if="${imageSet != null}">
+      <li th:each="image : ${imageSet.getImages()}" onmouseover="dowebokMouseover(this)"
+          onmouseout="dowebokMouseout(this)">
+        <input type="checkbox" name="albumPicture" th:value="${image.getName()}" onclick="inputNameAlbumPicture()">
+        <div><img class="lazyload" data-th-original="${image.getUrl()}"
+            data-th-src="${image.getUrlMini()}"
+            th:src="@{/images/loading.png}" th:alt="${image.getName()}" onclick="imageInformation()"></div>
+        <p th:text="${image.getName()}" th:title="${image.getName()}"></p>
+        <p th:text="${#dates.format(image.getCreateDate(),'MM-dd HH:mm')}" style="width: 100%;color: #b1b1b1;"></p>
+      </li>
+    </ul>
+
+
+  </div>
+  <!--  图片信息  -->
+  <div class="detailed_information">
+    <div class="detailedDownloadAndDelete">
+    </div>
+
+    <div>
+      <span>详细信息</span>
+      <div class="detailedImg">
+        <ion-icon name="person-outline" class="avatar-img"></ion-icon>
+        <div class="detailedType">
+          <div class="detailedName">获取数据失败</div>
+          <div class="detailedSize detailedColor">获取数据失败</div>
+        </div>
+      </div>
+      <div class="detailedImg">
+        <ion-icon name="person-outline" class="avatar-img"></ion-icon>
+        <div class="detailedType">
+          <div class="">创建时间</div>
+          <div class="detailedCreateData detailedColor">获取数据失败</div>
+        </div>
+      </div>
+      <div class="detailedImg">
+        <ion-icon name="person-outline" class="avatar-img"></ion-icon>
+        <div class="detailedType">
+          <div class="">修改时间</div>
+          <div class="detailedUpdateData detailedColor">获取数据失败</div>
+        </div>
+      </div>
+    </div>
+    <div class="detailed_label">
+      <span>标签</span>
+      <div class="detailed_tags"></div>
+    </div>
+
+  </div>
+  </div>
+
+  <div class="tool-items btn-toolbar-dark" id="album_menu">
+    <a href="#" class="tool-item" id="toolItems-down" title="下载"><i class="fa fa-download"></i></a>
+    <a href="#" class="tool-item" id="toolItems-star" title="收藏"><i class="fa fa-star"></i></a>
+    <a href="#" class="tool-item" id="toolItems-share" title="分享"><i class="fa fa-share"></i></a>
+    <a href="#" class="tool-item" id="toolItems-trash" title="删除"><i class="fa fa-trash"></i></a>
+    <a href="#" class="tool-item" id="toolItems-times-circle" title="取消多选"><i class="fa fa-times-circle"></i></a>
+  </div>
+
+</body>
+<!--导入公共js-->
+<div th:include="~{comm::js}"></div>
+<script th:src="@{/js/viewer.min.js}"></script>
+<script th:src="@{/js/album.js}"></script>
+<script th:src="@{/js/albumShow.js}"></script>
+<script th:src="@{/js/lazysizes.min.js}"></script>
+<script th:src="@{/js/Pagination.js}"></script>
+
+
+</html>
