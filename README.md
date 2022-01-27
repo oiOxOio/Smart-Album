@@ -1,7 +1,7 @@
 # smartAlbum
 
 2021年软件杯赛题 A5 云端智能相册应用  
-[视频演示](https://www.bilibili.com/video/BV1iv411J7Dm?share_source=copy_web) [在线演示](http://5hp.cc:8082)  
+[视频演示](https://www.bilibili.com/video/BV1iv411J7Dm?share_source=copy_web) [在线演示](http://smartalbum.5hp.cc)  
 
 ## 项目介绍
 
