@@ -1,7 +1,9 @@
 # smartAlbum
 
 2021年软件杯赛题 A5 云端智能相册应用  
-[视频演示](https://www.bilibili.com/video/BV1iv411J7Dm?share_source=copy_web) [在线演示](http://smartalbum.5hp.cc)  
+[视频演示](https://www.bilibili.com/video/BV1iv411J7Dm?share_source=copy_web) [在线演示](http://smartalbum.5hp.cc)
+> 由于生成精彩时刻视频时将占用大部分资源（大约需30秒） 所以演示站暂时关闭了此功能  
+> 附生成的[样例](out.mp4)
 
 ## 项目介绍
 
